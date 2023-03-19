@@ -39,18 +39,3 @@ export class UpdateBlogPostDto {
   deletedAt: Date;
 
 }
-
-// export class CommentDto {
-//   @IsDefined()
-//   @IsString()
-//   @IsNotEmpty()
-//   comment: string;
-
-//   @IsNotEmpty()
-//   @IsString()
-//   createdBy: string;
-
-//   @IsNotEmpty()
-//   @IsString()
-//   createdAt: string;
-// }

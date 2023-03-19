@@ -51,39 +51,3 @@ export class UserRepository {
     return await this.userModel.findById(id);
   }
 }
-
-// async update(
-//   id: string,
-//   updateUserProfileDto: UpdateUserProfileDto,
-// ): Promise<UserProfile> {
-//   const editedUserProfile = await this.UserProfileModel.findById(id);
-//   if (editedUserProfile === null)
-//     throw new NotFoundException('OOPs, data not found');
-
-//   const x = await this.UserProfileModel.find(updateUserProfileDto);
-//   if (!x.length) {
-//     if (updateUserProfileDto.email) {
-//       editedUserProfile.email = updateUserProfileDto.email;
-//     }
-//     if (updateUserProfileDto.firstName) {
-//       editedUserProfile.firstName = updateUserProfileDto.firstName;
-//     }
-//     if (updateUserProfileDto.lastName) {
-//       editedUserProfile.lastName = updateUserProfileDto.lastName;
-//     }
-//     if (updateUserProfileDto.userName) {
-//       editedUserProfile.userName = updateUserProfileDto.userName;
-//     }
-//     const newData = {
-//       ...editedUserProfile,
-//       email: editedUserProfile.email,
-//       firstName: editedUserProfile.firstName,
-//       lastName: editedUserProfile.lastName,
-//       userName: editedUserProfile.userName,
-//     };
-//     await this.UserProfileModel.findByIdAndUpdate(id, newData);
-//   } else {
-//     throw new NotFoundException('email already exists');
-//   }
-//   return await this.UserProfileModel.findById(id);
-// }

@@ -2,22 +2,15 @@ import { Body, Controller, Get, Res, Param, Post, HttpException, HttpStatus,Vali
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Request, Response } from 'express';
-import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
-import { jwtConstants } from '../../constants/constant';
 import { LocalStrategy } from '../auth/local.strategy';
 import { AuthService } from '../auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
-import { type } from 'os';
 import { SystemResponse } from '../../libs/response-handler';
-// import {
-  // Patch,  UsePipes,    Query,   Headers,   
-// } from '@nestjs/common';
-
-// import { UpdateUserDto } from './dto/update-user.dto';
 @ApiBearerAuth('JWT-auth')
-@ApiTags('user-profile')
+@ApiTags('user')
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService,
@@ -26,7 +19,6 @@ export class UserController {
     private LocalStrategy: LocalStrategy,
     ) {}
 
- // To get userProfiles
   @Get()
   async getUsers(@Res() res: Response,) {
   try{
@@ -64,7 +56,6 @@ export class UserController {
   @Get(':email')
   @UseGuards(AuthGuard('jwt'))
   async getUserByEmail(@Param('email') email: string,
-  @Req() req: Request,
   @Res() res: Response,
   ) {
     try {
@@ -78,8 +69,6 @@ export class UserController {
     }
   }
 
-
-// To register userProfile
   @Post('')
   @ApiBody({
     schema: {
@@ -178,46 +167,18 @@ export class UserController {
     }
   }
 
-  // @Delete(':id')
-  // async deleteUser(
-  //   @Param('id') id: string,
-  //   @Req() req: Request,
-  //   @Res() res: Response,
-  // ) {
-  //   const { logger } = res.locals;
-  //   try {
-  //     const data = await this.userService.deleteUser(id);
-  //     return res.send(
-  //       SystemResponse.success('Task deleted successfully', data),
-  //     );
-  //   } catch (err) {
-  //     return res.send(SystemResponse.internalServerError('Error', err.message));
-  //   }
-  // }
+  @Delete(':id')
+  async deleteUser(
+    @Param('id') id: string,
+    @Res() res: Response,
+  ) {
+    try {
+      const data = await this.userService.deleteUser(id);
+      return res.send(
+        SystemResponse.success('User deleted successfully', data),
+      );
+    } catch (err) {
+      return res.send(SystemResponse.internalServerError('Error', err.message));
+    }
+  }
 }
-
-  // @Patch(':id')
-  // async update(
-  //   @Param('id') id: string,
-  //   @Body() updateUserProfileDto: UpdateUserProfileDto,
-  //   @Req() req: Request,
-  //   @Res() res: Response,
-  // ) {
-  //   const { logger } = res.locals;
-  //   try {
-  //     const updatedUserProfile = await this.UserProfileService.update(
-  //       id,
-  //       updateUserProfileDto,
-  //     );
-  //     logger.info({
-  //       message: 'Task updated successfully',
-  //       data: [],
-  //       option: [],
-  //     });
-  //     return res.send(
-  //       SystemResponse.success('Task updated successfully', updatedUserProfile),
-  //     );
-  //   } catch (err) {
-  //     return res.send(SystemResponse.internalServerError('Error', err.message));
-  //   }
-  // }
